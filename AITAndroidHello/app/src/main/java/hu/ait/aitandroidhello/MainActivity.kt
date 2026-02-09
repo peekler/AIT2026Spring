@@ -1,9 +1,14 @@
 package hu.ait.aitandroidhello
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.ViewAnimationUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -29,14 +34,56 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnShowTime.setOnClickListener {
+            Log.d("TAG_DEMO", "My fancy button was clicked")
+
+
+
             Toast.makeText(
                 this,
-                "Button clicked",
+                getString(R.string.text_button_clicked),
                 Toast.LENGTH_SHORT).show()
 
-            var myNum = binding.etData.text.toString().toInt()
-            binding.tvText.setText("Result: ${myNum*2}")
+            try {
+                if (binding.etData.text.isEmpty()) {
+                    binding.etData.setError("This field can not be empty")
+                } else {
+                    var myNum = binding.etData.text.toString().toInt()
 
+                    //<string name="text_result">Result: %1$d %2$s</string>
+
+                    binding.tvText.setText(
+                        getString(R.string.text_result,5,"Peter")
+                    )
+                    revealCard()
+                }
+            } catch (e: Exception) {
+                binding.etData.setError("Error in this field: ${e.message}")
+            }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    fun revealCard() {
+        val x = binding.cardView.getRight()
+        val y = binding.cardView.getBottom()
+
+        val startRadius = 0
+        val endRadius = Math.hypot(binding.cardView.getWidth().toDouble(),
+            binding.cardView.getHeight().toDouble()).toInt()
+
+        val anim = ViewAnimationUtils.createCircularReveal(
+            binding.cardView,
+            x,
+            y,
+            startRadius.toFloat(),
+            endRadius.toFloat()
+        )
+
+        binding.cardView.setVisibility(View.VISIBLE)
+        anim.setDuration(5000) // millisec
+        anim.start()
+    }
+
+
+
 }

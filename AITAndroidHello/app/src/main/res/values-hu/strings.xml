@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AITAndroidHello</string>
+
+    <string name="btn_show_time">Mutasd az időt</string>
+    <string name="text_hello_world">Hello Világ!</string>
+    <string name="text_button_clicked">Gomb megnyomva</string>
+    <string name="text_result">Result: %1$d %2$s</string>
+
+</resources>
