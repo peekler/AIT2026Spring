@@ -48,6 +48,24 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        doCalculate(4,5, {num1, num2 -> num1*num2} )
     }
+
+    fun doCalculate(a: Int, b: Int, operator: (Int,Int)->Int) : Int
+    {
+        return operator(a,b)
+    }
+
+    fun plus(a: Int, b: Int) : Int
+    {
+        return a+b
+    }
+
+    fun minus(a: Int, b: Int) : Int
+    {
+        return a-b
+    }
+
 }
 

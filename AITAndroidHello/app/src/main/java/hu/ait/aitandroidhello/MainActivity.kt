@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+
+
         binding.btnShowTime.setOnClickListener {
             Log.d("TAG_DEMO", "My fancy button was clicked")
 

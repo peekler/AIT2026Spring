@@ -17,6 +17,8 @@ class TicTacToeViewModel : ViewModel() {
     )
         private set
 
+
+
     var currentPlayer by mutableStateOf(Player.X)
         private set
 
@@ -24,7 +26,7 @@ class TicTacToeViewModel : ViewModel() {
         private set
 
     init {
-        board[0][0]= Player.X
+        //board[0][0]= Player.X
     }
 
     fun onCellClicked(cell: BoardCell) {
@@ -38,7 +40,8 @@ class TicTacToeViewModel : ViewModel() {
         if (checkWin()) {
             winner = currentPlayer
         } else {
-            currentPlayer = if (currentPlayer == Player.X) Player.O else Player.X
+            currentPlayer =
+                if (currentPlayer == Player.X) Player.O else Player.X
         }
     }
 

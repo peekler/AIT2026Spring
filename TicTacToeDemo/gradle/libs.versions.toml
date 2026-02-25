@@ -12,7 +12,12 @@ composeBom = "2024.09.00"
 nav3Core = "1.0.1"
 lifecycleViewmodelNav3 = "2.10.0"
 
+zoomable="2.1.0"
+
 [libraries]
+zoomable = {module = "net.engawapg.lib:zoomable", version.ref = "zoomable"}
+
+
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
 androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
