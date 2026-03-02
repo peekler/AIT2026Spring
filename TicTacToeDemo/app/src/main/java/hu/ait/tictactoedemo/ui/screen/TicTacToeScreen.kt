@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import hu.ait.tictactoedemo.R
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
+
 
 
 @Composable
@@ -85,6 +88,7 @@ fun TicTacToeScreen(modifier: Modifier = Modifier,
             verticalArrangement = Arrangement.Center
         ) {
             Button(
+                modifier = Modifier.width(200.dp),
                 onClick = {ticTacToeViewModel.resetGame()},
             ) {
                 Text(stringResource(R.string.btn_reset))
