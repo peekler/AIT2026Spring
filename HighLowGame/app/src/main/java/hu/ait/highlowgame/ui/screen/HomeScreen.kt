@@ -10,7 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun HomeScreen(onStartClicked: ()->Unit) {
+fun HomeScreen(onStartClicked: ()->Unit,
+               onHelpClicked: ()->Unit,
+               onAboutClicked: ()->Unit
+) {
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -20,10 +23,10 @@ fun HomeScreen(onStartClicked: ()->Unit) {
         }) {
             Text("Start")
         }
-        Button(onClick = {}) {
+        Button(onClick = {onHelpClicked()}) {
             Text("Help")
         }
-        Button(onClick = {}) {
+        Button(onClick = {onAboutClicked()}) {
             Text("About")
         }
     }

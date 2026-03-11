@@ -6,6 +6,11 @@ import kotlinx.serialization.Serializable
 // list the screens of the app here
 
 @Serializable
+data object AboutScreenRoute: NavKey
+
+@Serializable
+data class HelpScreenRoute(var userName: String, var num: Int): NavKey
+@Serializable
 data object HomeScreenRoute: NavKey
 
 @Serializable
