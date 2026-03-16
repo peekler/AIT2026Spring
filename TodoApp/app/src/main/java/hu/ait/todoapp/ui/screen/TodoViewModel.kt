@@ -39,4 +39,13 @@ class TodoListViewModel : ViewModel() {
 
         _todoList[index] = newTodo
     }
+
+    fun updateTodo(
+        originalTodo: TodoItem,
+        editedTodo: TodoItem) {
+
+        val index = _todoList.indexOf(originalTodo)
+
+        _todoList[index] = editedTodo
+    }
 }
