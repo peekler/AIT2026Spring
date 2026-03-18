@@ -18,6 +18,11 @@ class TodoListViewModel : ViewModel() {
         return _todoList
     }
 
+    fun getImportantTodoNum() : Int {
+        return if (_todoList.isEmpty()) 0 else
+            _todoList.filter { it.priority == TodoPriority.HIGH }.size
+    }
+
     fun addTodoList(todoItem: TodoItem) {
         _todoList.add(todoItem)
     }
@@ -47,5 +52,9 @@ class TodoListViewModel : ViewModel() {
         val index = _todoList.indexOf(originalTodo)
 
         _todoList[index] = editedTodo
+    }
+
+    fun removeAllItem() {
+        _todoList.clear()
     }
 }

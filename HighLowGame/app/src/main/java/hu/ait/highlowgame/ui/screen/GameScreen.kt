@@ -45,6 +45,8 @@ fun GameScreen(
             isInputError = false
         } catch (e: Exception) {
             isInputError = true
+            if (guess.isNotEmpty())
+                guess = guess.substring(0, guess.length - 1)
         }
     }
 
@@ -88,7 +90,9 @@ fun GameScreen(
         }
 
 
-        Button(onClick = {
+        Button(
+            enabled = !isInputError,
+            onClick = {
             try {
                 isInputError = false
                 val userGuessNr = guess.toInt()

@@ -25,6 +25,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Delete
@@ -68,7 +69,8 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen(
-    viewModel: TodoListViewModel = viewModel()
+    viewModel: TodoListViewModel = viewModel(),
+    onSummaryClicked: (Int, Int) -> Unit
 ) {
     var todoText by remember { mutableStateOf("") }
     var showTodoDialog by rememberSaveable {
@@ -93,6 +95,26 @@ fun TodoScreen(
                 ) {
                     Icon(Icons.Filled.AddCircle, null)
                 }
+
+                IconButton(
+                    onClick = {
+                        viewModel.removeAllItem()
+                    }
+                ) {
+                    Icon(Icons.Filled.Delete, null)
+                }
+
+                IconButton(
+                    onClick = {
+                        onSummaryClicked(
+                            viewModel.getAllToDoList().size,
+                            viewModel.getImportantTodoNum()
+                        )
+                    }
+                ) {
+                    Icon(Icons.Filled.AccountBalanceWallet,
+                        null)
+                }
             }
         )
 
@@ -107,27 +129,39 @@ fun TodoScreen(
             )
         }
 
+        if (viewModel.getAllToDoList().isEmpty()) {
+            Column(modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally)
+            {
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            items(viewModel.getAllToDoList()) { todo ->
-                TodoCard(todo,
-                    onDeleteClicked = {
-                        todoToDelete -> viewModel.removeTodoItem(
-                            todoToDelete)
-                    },
-                    onCheckClicked = {
-                        checked -> viewModel.changeTodoState(
-                            todo, checked
-                        )
-                    },
-                    onTodoEdit = { selectedTodo ->
-                        todoToEdit = selectedTodo
-                        showTodoDialog = true
-                    }
-                )
+                Text("No todos")
+
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                items(viewModel.getAllToDoList()) { todo ->
+                    TodoCard(
+                        todo,
+                        onDeleteClicked = { todoToDelete ->
+                            viewModel.removeTodoItem(
+                                todoToDelete
+                            )
+                        },
+                        onCheckClicked = { checked ->
+                            viewModel.changeTodoState(
+                                todo, checked
+                            )
+                        },
+                        onTodoEdit = { selectedTodo ->
+                            todoToEdit = selectedTodo
+                            showTodoDialog = true
+                        }
+                    )
+                }
             }
         }
     }
