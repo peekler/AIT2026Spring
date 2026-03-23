@@ -46,9 +46,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -61,22 +63,28 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import hu.ait.todoapp.data.TodoItem
 import hu.ait.todoapp.data.TodoPriority
+import kotlinx.coroutines.launch
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen(
-    viewModel: TodoListViewModel = viewModel(),
+    viewModel: TodoListViewModel = hiltViewModel(),
     onSummaryClicked: (Int, Int) -> Unit
 ) {
     var todoText by remember { mutableStateOf("") }
     var showTodoDialog by rememberSaveable {
         mutableStateOf(false) }
-
     var todoToEdit: TodoItem? by rememberSaveable { mutableStateOf(null) }
+
+    val coroutineScope = rememberCoroutineScope()
+    var todoList = viewModel.getAllToDoList().collectAsState(
+        emptyList())
+
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -106,10 +114,13 @@ fun TodoScreen(
 
                 IconButton(
                     onClick = {
-                        onSummaryClicked(
-                            viewModel.getAllToDoList().size,
-                            viewModel.getImportantTodoNum()
-                        )
+                        coroutineScope.launch {
+                            val allTodoNum = viewModel.getAllTodoNum()
+                            val highPrio = viewModel.getImportantTodoNum()
+                            onSummaryClicked(
+                               allTodoNum, highPrio
+                            )
+                        }
                     }
                 ) {
                     Icon(Icons.Filled.AccountBalanceWallet,
@@ -129,7 +140,7 @@ fun TodoScreen(
             )
         }
 
-        if (viewModel.getAllToDoList().isEmpty()) {
+        if (todoList.value.isEmpty()) {
             Column(modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally)
@@ -143,7 +154,7 @@ fun TodoScreen(
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                items(viewModel.getAllToDoList()) { todo ->
+                items(todoList.value) { todo ->
                     TodoCard(
                         todo,
                         onDeleteClicked = { todoToDelete ->
@@ -360,7 +371,6 @@ fun TodoDialog(
                                 priority = if (important) TodoPriority.HIGH else TodoPriority.NORMAL
                             )
                             viewModel.updateTodo(
-                                todoToEdit,
                                 editedTodo
                             )
                         }

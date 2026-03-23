@@ -2,59 +2,59 @@ package hu.ait.todoapp.ui.screen
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import hu.ait.todoapp.data.TodoDAO
 import hu.ait.todoapp.data.TodoItem
 import hu.ait.todoapp.data.TodoPriority
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TodoListViewModel : ViewModel() {
-    private var _todoList =
-        mutableStateListOf<TodoItem>(
-            TodoItem(0,"Todo1", "Desc",
-                "11.03.2026.",
-                TodoPriority.NORMAL,
-                false)
-        )
+@HiltViewModel
+class TodoListViewModel @Inject constructor(val todoDAO: TodoDAO) : ViewModel() {
 
-    fun getAllToDoList(): List<TodoItem> {
-        return _todoList
+    fun getAllToDoList(): Flow<List<TodoItem>> {
+        return todoDAO.getAllTodos()
     }
 
-    fun getImportantTodoNum() : Int {
-        return if (_todoList.isEmpty()) 0 else
-            _todoList.filter { it.priority == TodoPriority.HIGH }.size
+    suspend fun getAllTodoNum() : Int {
+        return todoDAO.getTodosNum()
+    }
+
+    suspend fun getImportantTodoNum() : Int {
+        return todoDAO.getImportantTodosNum()
     }
 
     fun addTodoList(todoItem: TodoItem) {
-        _todoList.add(todoItem)
+        viewModelScope.launch() { // we launch a coroutine here
+            todoDAO.insert(todoItem)
+        }
     }
 
     fun removeTodoItem(todoItem: TodoItem) {
-        _todoList.remove(todoItem)
+        viewModelScope.launch() { // we launch a coroutine here
+            todoDAO.delete(todoItem)
+        }
     }
 
     fun changeTodoState(todoItem: TodoItem, value: Boolean) {
-        val index = _todoList.indexOf(todoItem)
-
-        val newTodo = todoItem.copy(
-            title = todoItem.title,
-            description = todoItem.description,
-            createDate = todoItem.createDate,
-            priority = todoItem.priority,
-            isDone = value
-        )
-
-        _todoList[index] = newTodo
+        val newTodo = todoItem.copy()
+        newTodo.isDone = value
+        viewModelScope.launch() { // we launch a coroutine here
+            todoDAO.update(newTodo)
+        }
     }
 
-    fun updateTodo(
-        originalTodo: TodoItem,
-        editedTodo: TodoItem) {
-
-        val index = _todoList.indexOf(originalTodo)
-
-        _todoList[index] = editedTodo
+    fun updateTodo(editedTodo: TodoItem) {
+        viewModelScope.launch() { // we launch a coroutine here
+            todoDAO.update(editedTodo)
+        }
     }
 
     fun removeAllItem() {
-        _todoList.clear()
+        viewModelScope.launch() { // we launch a coroutine here
+            todoDAO.deleteAllTodos()
+        }
     }
 }

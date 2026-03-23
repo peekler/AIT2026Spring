@@ -17,12 +17,15 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import dagger.hilt.android.AndroidEntryPoint
 import hu.ait.todoapp.navigation.SummaryScreenRoute
 import hu.ait.todoapp.navigation.TodoScreenRoute
 import hu.ait.todoapp.ui.screen.SummaryScreen
 import hu.ait.todoapp.ui.screen.TodoScreen
 import hu.ait.todoapp.ui.theme.TodoAppTheme
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
