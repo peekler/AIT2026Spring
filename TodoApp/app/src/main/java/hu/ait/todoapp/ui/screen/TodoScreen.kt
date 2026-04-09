@@ -40,6 +40,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -78,103 +79,115 @@ fun TodoScreen(
 ) {
     var todoText by remember { mutableStateOf("") }
     var showTodoDialog by rememberSaveable {
-        mutableStateOf(false) }
+        mutableStateOf(false)
+    }
     var todoToEdit: TodoItem? by rememberSaveable { mutableStateOf(null) }
 
     val coroutineScope = rememberCoroutineScope()
     var todoList = viewModel.getAllToDoList().collectAsState(
-        emptyList())
+        emptyList()
+    )
 
-
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        TopAppBar(
-            title = {Text("AIT Todo")},
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor =
-                    MaterialTheme.colorScheme.secondaryContainer
-            ),
-            actions = {
-                IconButton(
-                    onClick = {
-                        showTodoDialog = true
-                    }
-                ) {
-                    Icon(Icons.Filled.AddCircle, null)
-                }
-
-                IconButton(
-                    onClick = {
-                        viewModel.removeAllItem()
-                    }
-                ) {
-                    Icon(Icons.Filled.Delete, null)
-                }
-
-                IconButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            val allTodoNum = viewModel.getAllTodoNum()
-                            val highPrio = viewModel.getImportantTodoNum()
-                            onSummaryClicked(
-                               allTodoNum, highPrio
-                            )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("AIT Todo") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor =
+                        MaterialTheme.colorScheme.secondaryContainer
+                ),
+                actions = {
+                    IconButton(
+                        onClick = {
+                            showTodoDialog = true
                         }
+                    ) {
+                        Icon(Icons.Filled.AddCircle, null)
                     }
-                ) {
-                    Icon(Icons.Filled.AccountBalanceWallet,
-                        null)
-                }
-            }
-        )
 
-        if (showTodoDialog) {
-            TodoDialog(
-                viewModel,
-                todoToEdit,
-                onCancel = {
-                    showTodoDialog = false
-                    todoToEdit = null // turn off edit mode when dialog was cancelled
+                    IconButton(
+                        onClick = {
+                            viewModel.removeAllItem()
+                        }
+                    ) {
+                        Icon(Icons.Filled.Delete, null)
+                    }
+
+                    IconButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                val allTodoNum = viewModel.getAllTodoNum()
+                                val highPrio = viewModel.getImportantTodoNum()
+                                onSummaryClicked(
+                                    allTodoNum, highPrio
+                                )
+                            }
+                        }
+                    ) {
+                        Icon(
+                            Icons.Filled.AccountBalanceWallet,
+                            null
+                        )
+                    }
                 }
             )
         }
-
-        if (todoList.value.isEmpty()) {
-            Column(modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally)
-            {
-
-                Text("No todos")
-
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            if (showTodoDialog) {
+                TodoDialog(
+                    viewModel,
+                    todoToEdit,
+                    onCancel = {
+                        showTodoDialog = false
+                        todoToEdit = null // turn off edit mode when dialog was cancelled
+                    }
+                )
             }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                items(todoList.value) { todo ->
-                    TodoCard(
-                        todo,
-                        onDeleteClicked = { todoToDelete ->
-                            viewModel.removeTodoItem(
-                                todoToDelete
-                            )
-                        },
-                        onCheckClicked = { checked ->
-                            viewModel.changeTodoState(
-                                todo, checked
-                            )
-                        },
-                        onTodoEdit = { selectedTodo ->
-                            todoToEdit = selectedTodo
-                            showTodoDialog = true
-                        }
-                    )
+
+            if (todoList.value.isEmpty()) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                )
+                {
+
+                    Text("No todos")
+
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    items(todoList.value) { todo ->
+                        TodoCard(
+                            todo,
+                            onDeleteClicked = { todoToDelete ->
+                                viewModel.removeTodoItem(
+                                    todoToDelete
+                                )
+                            },
+                            onCheckClicked = { checked ->
+                                viewModel.changeTodoState(
+                                    todo, checked
+                                )
+                            },
+                            onTodoEdit = { selectedTodo ->
+                                todoToEdit = selectedTodo
+                                showTodoDialog = true
+                            }
+                        )
+                    }
                 }
             }
         }
+
     }
 }
 
@@ -216,7 +229,8 @@ fun TodoCard(
             ) {
                 Image(
                     painter = painterResource(
-                        id = todoItem.priority.getIcon()),
+                        id = todoItem.priority.getIcon()
+                    ),
                     contentDescription = "Priority",
                     modifier = Modifier
                         .size(40.dp)
@@ -277,14 +291,15 @@ fun TodoCard(
 
             if (expanded) {
                 Text(
-                    todoItem.description)
+                    todoItem.description
+                )
                 Text(
-                    todoItem.createDate)
+                    todoItem.createDate
+                )
             }
         }
     }
 }
-
 
 
 @Composable

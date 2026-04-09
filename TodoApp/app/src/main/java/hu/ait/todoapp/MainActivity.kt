@@ -32,11 +32,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TodoAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainNav(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MainNav(
+                    modifier = Modifier
+                )
             }
         }
     }
@@ -59,11 +57,13 @@ fun MainNav(modifier: Modifier = Modifier) {
         entryProvider = entryProvider {
             entry<TodoScreenRoute> {
                 TodoScreen(
-                    onSummaryClicked = {
-                        allTodo, importantTodo ->
-                            backStack.add(SummaryScreenRoute(
+                    onSummaryClicked = { allTodo, importantTodo ->
+                        backStack.add(
+                            SummaryScreenRoute(
                                 allTodo,
-                                importantTodo))
+                                importantTodo
+                            )
+                        )
                     }
                 )
             }

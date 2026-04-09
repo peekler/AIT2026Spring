@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "639322048728",
+    "project_id": "aitforum-f0552",
+    "storage_bucket": "aitforum-f0552.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639322048728:android:264044775885fb357fefad",
+        "android_client_info": {
+          "package_name": "hu.ait.aitforum"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAy3SD7r7yVGEWLxpPO8l_S7noPO-Eb81k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
