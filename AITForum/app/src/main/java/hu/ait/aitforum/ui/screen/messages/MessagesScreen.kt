@@ -1,0 +1,32 @@
+package hu.ait.aitforum.ui.screen.messages
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+
+@Composable
+fun MessagesScreen(
+    onWriteMessageClick: () -> Unit = {}
+) {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                onWriteMessageClick()
+            }) {
+                Icon(Icons.Default.Add, null)
+            }
+        }
+    ) {
+        innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding)) {
+
+            }
+    }
+
+}

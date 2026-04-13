@@ -1,4 +1,4 @@
-package hu.ait.aitforum.ui.screen
+package hu.ait.aitforum.ui.screen.auth
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -104,7 +104,12 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 OutlinedButton(onClick = {
-                    // ...
+                    coroutineScope.launch {
+                        val result = viewModel.loginUser(email, password)
+                        if (result?.user != null) {
+                            onLoginSuccess()
+                        }
+                    }
                 }) {
                     Text(text = "Login")
                 }
@@ -123,7 +128,17 @@ fun LoginScreen(
                 .padding(bottom = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CircularProgressIndicator()
+            when (viewModel.loginUiState) {
+                is LoginUiState.Error -> {
+                    Text(text =
+                        "Error: {${(viewModel.loginUiState as LoginUiState.Error)
+                            .errorMessage}}")
+                }
+                is LoginUiState.Init -> {}
+                is LoginUiState.Loading -> CircularProgressIndicator()
+                is LoginUiState.LoginSuccess -> Text("Login OK")
+                is LoginUiState.RegisterSuccess -> Text("Register OK")
+            }
         }
     }
 }

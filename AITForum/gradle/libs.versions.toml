@@ -16,6 +16,7 @@ lifecycleViewmodelNav3 = "2.10.0"
 kotlinSerialization = "2.3.10"
 kotlinxSerializationCore = "1.10.0"
 material3AdaptiveNav3 = "1.0.0-alpha03"
+firebaseFirestore = "26.2.0"
 
 [libraries]
 # Core Navigation 3 libraries
@@ -42,6 +43,7 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization"}
