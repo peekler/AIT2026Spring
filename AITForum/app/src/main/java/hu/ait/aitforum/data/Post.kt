@@ -6,8 +6,7 @@ data class Post(
     var postDate: String = "",
     var postTitle: String = "",
     var postBody: String = "",
-    var imgUrl: String = "",
-    var likedNumber: Int = 4
+    var imgUrl: String = ""
 )
 
 // DTO Data Transfer Object

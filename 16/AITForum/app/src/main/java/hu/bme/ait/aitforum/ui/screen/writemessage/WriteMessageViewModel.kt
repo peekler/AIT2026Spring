@@ -98,16 +98,9 @@ class WriteMessageViewModel : ViewModel() {
             bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val imageInBytes = baos.toByteArray()
 
-            /*val supabase = createSupabaseClient(
-                supabaseUrl = "https://qeelxsehrbdakiapcams.supabase.co",
-                supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFlZWx4c2VocmJkYWtpYXBjYW1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2Mjk5NDEsImV4cCI6MjA3ODIwNTk0MX0.4JjdOT2rP_6HhyCpHciywu-FDa3TlKPvwehcTBG1v_Q",
-            ) {
-                install(Postgrest)
-                install(Storage)
-            }*/
             val supabase = createSupabaseClient(
-                supabaseUrl = "https://wiyueiusdklanupqajra.supabase.co",
-                supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpeXVlaXVzZGtsYW51cHFhanJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwNDExMDQsImV4cCI6MjA3ODYxNzEwNH0.yBVqPvHxRyimvySui29sJsWh2GVlQixVGgR86J0cORQ",
+                supabaseUrl = "https://nnwakvpnfroyibyysotb.supabase.co",
+                supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ud2FrdnBuZnJveWlieXlzb3RiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxODgzMTQsImV4cCI6MjA5MTc2NDMxNH0.odwmtQDl-bUJVH5DNR2UVjjgTFJzjpFOLdUpOcQiMuI",
             ) {
                 install(Postgrest)
                 install(Storage)

@@ -18,7 +18,23 @@ kotlinxSerializationCore = "1.10.0"
 material3AdaptiveNav3 = "1.0.0-alpha03"
 firebaseFirestore = "26.2.0"
 
+accompanistPermissions = "0.37.3" #permission
+postgrestKt = "2.6.0" # supabase
+serialization="2.0.21" # supabase
+storageKt = "2.6.0" # supabase
+gotrueKt = "2.6.1" # supabase
+ktor = "2.3.5" # supabase
+coilCompose = "2.7.0" # downloading images...
+
+
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+gotrue-kt = { module = "io.github.jan-tennert.supabase:gotrue-kt", version.ref = "gotrueKt" }
+ktor-client-okhttp = {module = "io.ktor:ktor-client-okhttp", version.ref = "ktor"}
+postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "postgrestKt" }
+storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", version.ref = "storageKt" }
+
 # Core Navigation 3 libraries
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }

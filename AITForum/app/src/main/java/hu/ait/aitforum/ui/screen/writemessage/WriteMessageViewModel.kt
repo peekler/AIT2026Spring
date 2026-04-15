@@ -1,15 +1,29 @@
 package hu.ait.aitforum.ui.screen.writemessage
 
+import android.content.ContentResolver
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import hu.ait.aitforum.data.Post
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.storage.Storage
+import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.util.Date
+import java.util.UUID
 
 sealed interface WritePostUiState {
     object Init : WritePostUiState
@@ -65,5 +79,44 @@ class WriteMessageViewModel : ViewModel() {
                 )
             }
     }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    public fun uploadPostImage(
+        contentResolver: ContentResolver,
+        imageUri: Uri,
+        title: String,
+        postBody: String
+    ) {
+        viewModelScope.launch {
+            writePostUiState = WritePostUiState.LoadingImageUpload
+
+            val source = ImageDecoder.createSource(contentResolver,
+                imageUri)
+            val bitmap = ImageDecoder.decodeBitmap(source)
+
+            val baos = ByteArrayOutputStream()
+            bitmap?.compress(Bitmap.CompressFormat.JPEG,
+                100, baos)
+            val imageInBytes = baos.toByteArray()
+
+            val supabase = createSupabaseClient(
+                supabaseUrl = "https://nnwakvpnfroyibyysotb.supabase.co",
+                supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ud2FrdnBuZnJveWlieXlzb3RiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxODgzMTQsImV4cCI6MjA5MTc2NDMxNH0.odwmtQDl-bUJVH5DNR2UVjjgTFJzjpFOLdUpOcQiMuI",
+            ) {
+                install(Postgrest)
+                install(Storage)
+            }
+
+            val bucket = supabase.storage.from("forumimages")
+
+            val fileName = "uploads/${UUID.randomUUID().toString()}.jpg"
+            bucket.upload(fileName, imageInBytes)
+            val imgUrl = bucket.publicUrl(fileName)
+
+            uploadPost(title, postBody, imgUrl)
+        }
+    }
+
+
 
 }

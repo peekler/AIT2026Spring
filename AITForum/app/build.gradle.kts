@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId = "hu.ait.aitforum"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -68,4 +68,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.androidx.material3.adaptive.navigation3)
     implementation(libs.kotlinx.serialization.core)
+
+    implementation(libs.storage.kt)
+    implementation(libs.postgrest.kt)
+    implementation(libs.gotrue.kt)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.coil.compose)
 }
