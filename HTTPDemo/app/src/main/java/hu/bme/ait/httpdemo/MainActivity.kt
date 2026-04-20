@@ -72,3 +72,4 @@ fun NavGraph(modifier: Modifier) {
         }
     )
 }
+
