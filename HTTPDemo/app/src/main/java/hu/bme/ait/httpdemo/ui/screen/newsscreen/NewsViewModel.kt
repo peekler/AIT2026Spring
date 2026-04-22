@@ -21,12 +21,12 @@ sealed interface NewsUiState {
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-    //val newsAPI: NewsAPI
+    val newsAPI: NewsAPI
 ) : ViewModel() {
 
     var newsUiState: NewsUiState by mutableStateOf(NewsUiState.Init)
 
-    /*fun getNews() {
+    fun getNews() {
         newsUiState = NewsUiState.Loading
         viewModelScope.launch {
             delay(5000)
@@ -38,6 +38,6 @@ class NewsViewModel @Inject constructor(
                 NewsUiState.Error(e.message!!)
             }
         }
-    }*/
+    }
 
 }
