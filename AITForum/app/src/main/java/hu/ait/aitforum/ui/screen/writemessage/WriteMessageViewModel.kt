@@ -36,6 +36,7 @@ sealed interface WritePostUiState {
     object ImageUploadSuccess : WritePostUiState
 }
 
+
 class WriteMessageViewModel : ViewModel() {
     companion object { // static items are inside this
         const val COLLECTION_POSTS = "posts"
