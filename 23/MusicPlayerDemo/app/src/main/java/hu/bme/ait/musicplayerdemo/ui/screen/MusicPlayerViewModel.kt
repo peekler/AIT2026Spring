@@ -49,7 +49,8 @@ class MusicPlayerViewModel(
 
     inner class MySeekTimerTask: TimerTask() {
         override fun run() {
-            mediaProgress.value = mediaPlayer.currentPosition.toFloat()
+            mediaProgress.value =
+                mediaPlayer.currentPosition.toFloat()
         }
     }
 

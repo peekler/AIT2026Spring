@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import hu.bme.ait.musicplayerdemo.R
 
 @Composable
 fun MusicPlayerScreen(
@@ -19,9 +20,8 @@ fun MusicPlayerScreen(
 ) {
     val context = LocalContext.current
 
-
     val uriNotif = RingtoneManager.getDefaultUri(
-        RingtoneManager.TYPE_NOTIFICATION
+        RingtoneManager.TYPE_ALARM
     )
     val notiftone = RingtoneManager.getRingtone(
         context, uriNotif

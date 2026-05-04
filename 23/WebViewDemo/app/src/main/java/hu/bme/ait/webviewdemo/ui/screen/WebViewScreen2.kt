@@ -30,10 +30,10 @@ fun WebViewScreen2() {
     val state = rememberWebViewState(url = "https://www.ait-budapest.com/")
 
     var url by remember {
-        mutableStateOf("https://www.ait-budapest.com/")
+        mutableStateOf("https://www.bme.hu/")
     }
     var myUrl by remember {
-        mutableStateOf("https://www.ait-budapest.com/")
+        mutableStateOf("https://www.bme.hu/")
     }
 
     var backHandlerEnabled by remember {
